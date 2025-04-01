@@ -20,6 +20,8 @@ import { chatSession } from '@/utils/GeminiAIModal'
 import { v4 as uuidv4 } from 'uuid'
 import { useUser } from '@clerk/nextjs'
 import { MockInterview } from '@/utils/schema'
+import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/router';
 
 
 function AddNewInterview() {
@@ -31,6 +33,7 @@ function AddNewInterview() {
     const [loading, setLoading] = React.useState(false)
     const [JsonResponse, setJsonResponse] = React.useState([])
     const {user} = useUser();
+    const router = useRouter();
     const onSubmit = async (e) => {
         setLoading(true);
         e.preventDefault()  
@@ -55,6 +58,7 @@ function AddNewInterview() {
             console.log("Inserted ID:",resp)
             if(resp){
                 setOpenDialog(false);
+                router.push('/dashboard/interview/'+resp[0].mockId);
             }
         }
         else {
