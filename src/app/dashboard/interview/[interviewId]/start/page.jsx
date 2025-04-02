@@ -7,6 +7,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation';
 import QuestionsSection from './_components/QuestionsSection';
 import RecordAnswerSection from './_components/RecordAnswerSection';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 function StartInterview({params}) {
     // const params = useParams();
@@ -33,20 +35,37 @@ function StartInterview({params}) {
     }
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-        {/* {Questions} */}
-        <QuestionsSection 
-        mockInterviewQuestion={mockInterviewQuestion}
-        activeQuestionIndex={activeQuestionIndex}
-
-        />
-
-        {/* {Video/AudioRecording} */}
-        <RecordAnswerSection
+    <div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+            {/* {Questions} */}
+            <QuestionsSection 
             mockInterviewQuestion={mockInterviewQuestion}
             activeQuestionIndex={activeQuestionIndex}
-            interviewData={interviewData}
-        />
+            
+            />
+
+            {/* {Video/AudioRecording} */}
+            <RecordAnswerSection
+                mockInterviewQuestion={mockInterviewQuestion}
+                activeQuestionIndex={activeQuestionIndex}
+                interviewData={interviewData}
+                />
+        </div>
+
+        <div className='flex justify-end gap-6 my-7'>
+            {activeQuestionIndex > 0 && 
+            <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}>Previous Question</Button>}
+            {activeQuestionIndex < mockInterviewQuestion?.length - 1 && 
+            <Button onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}>Next Question</Button>
+            }
+
+
+            {activeQuestionIndex === mockInterviewQuestion?.length - 1 && 
+            <Link href = {'/dashboard/interview/'+interviewData?.mockId+"/feedback"}>
+            <Button>End Interview</Button>
+            </Link>}
+
+        </div>
     </div>
   )
 }

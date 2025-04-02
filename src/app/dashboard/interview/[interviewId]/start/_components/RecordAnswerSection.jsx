@@ -24,6 +24,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
         results,
         startSpeechToText,
         stopSpeechToText,
+        setResults
     } = useSpeechToText({
         continuous: true,
         useLegacyResults: false,
@@ -86,19 +87,22 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
 
             if(resp) {
                 toast.success("Answer saved successfully");
+                
             }
             setUserAnswer("");
+            setResults([]);
         } catch (error) {
             console.error("Error updating user answer:", error);
             toast.error("Failed to save answer.");
         } finally {
+            
             setLoading(false);
         }
     };
 
     return (
         <div className="flex flex-col items-center justify-center">
-            <div className="flex flex-col items-center justify-center rounded-lg p-5 my-20 bg-black relative">
+            <div className="flex flex-col items-center justify-center rounded-lg p-5 my-7 bg-black relative">
                 <Image src="/webcam.jpg" width={200} height={200} className="absolute" />
                 <Webcam
                     mirrored
@@ -109,7 +113,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                     }}
                 />
             </div>
-            <div className="flex flex-col items-center justify-center gap-5">
+            <div className="flex flex-col items-center justify-center ">
                 <Button disabled={loading} variant="outline" onClick={StartStopRecording}>
                     {isRecording ? (
                         <h2 className="text-red-600 flex gap-2">
@@ -122,7 +126,7 @@ function RecordAnswerSection({ mockInterviewQuestion, activeQuestionIndex, inter
                     )}
                 </Button>
 
-                <Button onClick={() => console.log(userAnswer)}>Show user Answer</Button>
+                {/* <Button onClick={() => console.log(userAnswer)}>Show user Answer</Button> */}
             </div>
         </div>
     );
