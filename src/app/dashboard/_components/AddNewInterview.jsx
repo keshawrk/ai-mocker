@@ -38,7 +38,8 @@ function AddNewInterview() {
         setLoading(true);
         e.preventDefault()  
         console.log(jobPosition, jobDesc, jobExperience)
-        const inputPrompt = "Job Position : " + jobPosition + ", Job Description: " + jobDesc + " , Years of Experience: "+jobExperience+" Based on the information provided, please give me 5 interview questions with answers in json format , give questions and answers as field"
+        const inputPrompt = "Job Position : " + jobPosition + ", Job Description: " + jobDesc + " , Years of Experience: "+jobExperience+" Based on the information provided, please give me 5 interview questions with answers in json format , give questions and answers as field
+            "Return ONLY pure JSON. Do not add explanations. Do not add markdown. Do not wrap in ```json```."
         const result = await chatSession.sendMessage(inputPrompt);
         const MockJsonResp = result.response.text().replace('```json','').replace('```','');
         console.log(JSON.parse(MockJsonResp));
